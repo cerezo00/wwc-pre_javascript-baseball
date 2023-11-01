@@ -5,13 +5,13 @@ import Strings from './resources/Strings';
 class Feedback {
 
   /** @type {string} */
-  _feedback = null;
+  #feedback = null;
 
   /** @type {number} */
-  _balls = null;
+  #balls = null;
 
   /** @type {number} */
-  _strikes = null;
+  #strikes = null;
 
   /**
    * 객체 생성 시, 피드백을 생성한다.
@@ -19,9 +19,9 @@ class Feedback {
    * @param {number} strikes 
    */
   constructor(balls, strikes) {
-    this._balls = balls;
-    this._strikes = strikes;
-    this._makeFeedback();
+    this.#balls = balls;
+    this.#strikes = strikes;
+    this.#makeFeedback();
   }
 
   /**
@@ -31,19 +31,19 @@ class Feedback {
    * - ${strikes}스트라이크
    * - ${balls}볼 ${strikes}스트라이크
    */
-  _makeFeedback() {
+  #makeFeedback() {
     let string = ''
-    if (this._balls) string += this._balls + Strings.BALL + Strings.SPACE;
-    if (this._strikes) string += this._strikes + Strings.STRIKE;
+    if (this.#balls) string += this.#balls + Strings.BALL + Strings.SPACE;
+    if (this.#strikes) string += this.#strikes + Strings.STRIKE;
     if (!string) string += Strings.NOTHING
-    this._feedback = string;
+    this.#feedback = string;
   }
 
   /**
    * 피드백을 출력한다.
    */
   print() {
-    Console.print(this._feedback);
+    Console.print(this.#feedback);
   }
 
   /**
@@ -51,7 +51,7 @@ class Feedback {
    * @returns {number}
    */
   getStrikes() {
-    return this._strikes;
+    return this.#strikes;
   }
 }
 

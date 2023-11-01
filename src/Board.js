@@ -9,22 +9,22 @@ const LENGTH = 3;
 class Board {
 
 	/** @type {string} */
-	_answer = null;
+	#answer = null;
 
-	_guesses = [];
-	_feedbacks = [];
+	#guesses = [];
+	#feedbacks = [];
 
 	/**
 	 * 객체 생성 시, 임의의 정답을 생성한다.
 	 */
 	constructor() {
-		this._setAnswer();
+		this.#setAnswer();
 	}
 
 	/**
 	 * 임의의 정답을 생성한다.
 	 */
-	_setAnswer() {
+	#setAnswer() {
 		let numbers = []
 		while (numbers.length < LENGTH) {
 			const number = Random.pickNumberInRange(1, 9);
@@ -32,7 +32,7 @@ class Board {
 				numbers.push(number);
 			}
 		}
-		this._answer = new Numbers(numbers.join(''));
+		this.#answer = new Numbers(numbers.join(''));
 	}
 
 	/**
@@ -40,22 +40,22 @@ class Board {
 	 */
 	async getUserGuess() {
 		const input = await Console.readLineAsync(Strings.REQUEST);
-		this._guesses.push(new Numbers(input));
+		this.#guesses.push(new Numbers(input));
 	}
 
 	/**
 	 * 사용자의 마지막 추측과 정답을 비교하여 피드백을 생성한다.
 	 */
 	checkUserGuess() {
-		let [balls, strikes] = this._answer.compare(this._guesses.at(-1));
-		this._feedbacks.push(new Feedback(balls, strikes));
+		let [balls, strikes] = this.#answer.compare(this.#guesses.at(-1));
+		this.#feedbacks.push(new Feedback(balls, strikes));
 	}
 
 	/**
 	 * 마지막으로 생성된 피드백을 출력한다.
 	 */
 	printFeedback() {
-		this._feedbacks.at(-1).print();
+		this.#feedbacks.at(-1).print();
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Board {
 	 * @returns {boolean}
 	 */
 	isCorrectAnswer() {
-		return LENGTH !== this._feedbacks.at(-1).getStrikes();
+		return LENGTH === this.#feedbacks.at(-1).getStrikes();
 	}
 }
 

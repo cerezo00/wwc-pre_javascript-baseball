@@ -8,34 +8,35 @@ const NO_DUPLICATES_REGEX = /^(?!.*(\d).*\1)\d+$/;
 class Numbers {
 
 	/** @type {string} */
-	_value = null;
+	#value = null;
 
 	/**
 	 * 객체 생성 시, 입력받은 문자열의 유효성 검사를 수행하고 멤버변수로 저장한다.
 	 * @param {string} value 
 	 */
 	constructor(value) {
-		this._validate(value);
-		this._value = value;
+		this.#validate(value);
+		this.#value = value;
 	}
 
 	/**
 	 * 정답 형식에 대한 유효성 검사를 수행한다.
 	 * @param {string} value 입력받은 문자열
 	 */
-	_validate(value) {
-		this._checkLength(value);
-		this._checkDataType(value);
-		this._checkDuplicate(value);
+	#validate(value) {
+		this.#checkLength(value);
+		this.#checkDataType(value);
+		this.#checkDuplicate(value);
 	}
 
 	/**
 	 * 정답 형식에 대한 길이 검사를 수행한다.
 	 * @param {string} value 입력받은 문자열
 	 */
-	_checkLength(value) {
+	#checkLength(value) {
 		if (value.length !== LENGTH) {
 			throw new Error(Strings.ERROR_INPUT_LENGTH);
+			process.exit(1);
 		}
 	}
 
@@ -43,9 +44,10 @@ class Numbers {
 	 * 정답 형식에 대한 타입 검사를 수행한다.
 	 * @param {string} value 입력받은 문자열
 	 */
-	_checkDataType(value) {
+	#checkDataType(value) {
 		if (!DATA_TYPE_REGEX.test(value)) {
 			throw new Error(Strings.ERROR_INPUT_DATA_TYPE);
+			process.exit(1);
 		}
 	}
 
@@ -53,9 +55,10 @@ class Numbers {
 	 * 정답 형식에 대한 중복 검사를 수행한다.
 	 * @param {string} value 입력받은 문자열
 	 */
-	_checkDuplicate(value) {
+	#checkDuplicate(value) {
 		if (!NO_DUPLICATES_REGEX.test(value)) {
 			throw new Error(Strings.ERROR_INPUT_DUPLICATE);
+			process.exit(1);
 		}
 	}
 
@@ -66,8 +69,8 @@ class Numbers {
 	 */
 	compare(target) {
 		const targetValue = target.getValue();
-		const balls = this._countBalls(targetValue);
-		const strikes = this._countStrikes(targetValue);
+		const balls = this.#countBalls(targetValue);
+		const strikes = this.#countStrikes(targetValue);
 		return [balls, strikes];
 	}
 
@@ -76,11 +79,11 @@ class Numbers {
 	 * @param {string} target 
 	 * @returns {number}
 	 */
-	_countBalls(target) {
+	#countBalls(target) {
 		let balls = 0;
 
 		for (let i = 0; i < target.length; i++) {
-			if (this._value.includes(target[i]) && this._value[i] !== target[i]) {
+			if (this.#value.includes(target[i]) && this.#value[i] !== target[i]) {
 				balls++;
 			}
 		}
@@ -93,11 +96,11 @@ class Numbers {
 	 * @param {string} target 
 	 * @returns {number}
 	 */
-	_countStrikes(target) {
+	#countStrikes(target) {
 		let strikes = 0;
 
 		for (let i = 0; i < target.length; i++) {
-			if (this._value[i] === target[i]) {
+			if (this.#value[i] === target[i]) {
 				strikes++;
 			}
 		}
@@ -110,7 +113,7 @@ class Numbers {
 	 * @returns {string}
 	 */
 	getValue() {
-		return this._value;
+		return this.#value;
 	}
 }
 

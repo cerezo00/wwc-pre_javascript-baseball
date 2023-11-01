@@ -6,52 +6,52 @@ import Board from './Board';
 class GameManager {
 
 	/** @type {Board} */
-	_board = null;
+	#board = null;
 
 	/**
 	 * GameManager를 실행한다.
 	 */
 	async play() {
 		do {
-			this._startGame();
-			await this._playGame();
-			this._finishGame();
-		} while (await this._willReplay());
+			this.#startGame();
+			await this.#playGame();
+			this.#finishGame();
+		} while (await this.#willReplay());
 	}
 
 	/**
 	 * 게임을 시작한다.
 	 */
-	_startGame() {
+	#startGame() {
 		Console.print(Strings.START);
-		this._board = new Board();
+		this.#board = new Board();
 	}
 
 	/**
 	 * 정답을 맞출 때까지 게임을 진행한다.
 	 */
-	async _playGame() {
+	async #playGame() {
 		do {
-			await this._board.getUserGuess();
-			this._board.checkUserGuess();
-			this._board.printFeedback();
-		} while (this._board.isCorrectAnswer());
+			await this.#board.getUserGuess();
+			this.#board.checkUserGuess();
+			this.#board.printFeedback();
+		} while (!this.#board.isCorrectAnswer());
 	}
 
 	/**
 	 * 게임을 마무리한다.
 	 */
-	_finishGame() {
+	#finishGame() {
 		Console.print(Strings.FINISH);
 	}
 
 	/**
-	 * 사용자로부터 재시작 여부를 입력받는다.\
+	 * 사용자로부터 재시작 여부를 입력받는다.
 	 * [1 : ture, 2 : false]
 	 * @returns {boolean}
 	 * @throws [1, 2]를 제외한 값의 입력
 	 */
-	async _willReplay() {
+	async #willReplay() {
 		Console.print(Strings.REPLAY);
 		const input = await Console.readLineAsync();
 		if (input === '1') return true;
